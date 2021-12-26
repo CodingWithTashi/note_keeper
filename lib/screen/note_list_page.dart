@@ -77,11 +77,13 @@ class _NoteListPageState extends State<NoteListPage> {
   }
 
   Widget noteListUI(List<NoteData> noteList) {
-    return Container();
+    return Container(
+      child: Center(child: Text('Note exist')),
+    );
   }
 
-  void _navigateToDetail(String title, NoteCompanion noteCompanion) {
-    Navigator.push(
+  _navigateToDetail(String title, NoteCompanion noteCompanion) async {
+    var res = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => NoteDetailPage(
@@ -90,5 +92,8 @@ class _NoteListPageState extends State<NoteListPage> {
         ),
       ),
     );
+    if (res != null && res == true) {
+      setState(() {});
+    }
   }
 }
