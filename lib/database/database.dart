@@ -46,4 +46,9 @@ class AppDatabase extends _$AppDatabase {
   Future<int> deleteNote(NoteData noteData) async {
     return await delete(note).delete(noteData);
   }
+
+  // UPDATE NOTES
+  Future<bool> updateNote(NoteData noteData) async {
+    return await update(note).replace(noteData);
+  }
 }
