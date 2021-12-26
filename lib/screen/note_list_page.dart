@@ -12,7 +12,10 @@ class _NoteListPageState extends State<NoteListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text('Hello World!'),
+        child: Text(
+          'Hello World!',
+          style: Theme.of(context).textTheme.headline5,
+        ),
       ),
     );
   }
