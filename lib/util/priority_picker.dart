@@ -26,6 +26,7 @@ class _PriorityPickerState extends State<PriorityPicker> {
           return InkWell(
             onTap: () {
               widget.index = index;
+              widget.onTap(index);
               setState(() {});
             },
             child: Container(
