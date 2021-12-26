@@ -15,10 +15,12 @@ class NoteListPage extends StatefulWidget {
 
 class _NoteListPageState extends State<NoteListPage> {
   late AppDatabase database;
+  int axisCount = 2;
   @override
   Widget build(BuildContext context) {
     database = Provider.of<AppDatabase>(context);
     return Scaffold(
+      appBar: _getNoteListAppBar(),
       body: FutureBuilder<List<NoteData>>(
         future: _getNoteFromDatabase(),
         builder: (context, snapshot) {
@@ -97,7 +99,7 @@ class _NoteListPageState extends State<NoteListPage> {
             );
           },
           child: Container(
-            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            margin: const EdgeInsets.symmetric(horizontal: 10),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
@@ -138,7 +140,9 @@ class _NoteListPageState extends State<NoteListPage> {
           ),
         );
       },
-      staggeredTileBuilder: (index) => StaggeredTile.fit(2),
+      staggeredTileBuilder: (index) => StaggeredTile.fit(axisCount),
+      mainAxisSpacing: 8,
+      crossAxisSpacing: 4,
     );
   }
 
@@ -177,5 +181,33 @@ class _NoteListPageState extends State<NoteListPage> {
       default:
         return Colors.yellow;
     }
+  }
+
+  _getNoteListAppBar() {
+    return AppBar(
+      backgroundColor: Colors.white,
+      centerTitle: true,
+      elevation: 0,
+      title: Text(
+        'Notes',
+        style: Theme.of(context).textTheme.headline5,
+      ),
+      actions: [
+        IconButton(
+          onPressed: () {
+            if (axisCount == 2) {
+              axisCount = 4;
+            } else {
+              axisCount = 2;
+            }
+            setState(() {});
+          },
+          icon: Icon(
+            axisCount == 4 ? Icons.grid_on : Icons.list,
+            color: Colors.black,
+          ),
+        )
+      ],
+    );
   }
 }
