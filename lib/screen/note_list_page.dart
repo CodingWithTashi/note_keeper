@@ -84,33 +84,46 @@ class _NoteListPageState extends State<NoteListPage> {
       crossAxisCount: 4,
       itemBuilder: (context, index) {
         NoteData noteData = noteList[index];
-        return Container(
-          margin: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5),
-              border: Border.all(color: Colors.black)),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(noteData.title),
-                  Text(_getPriority(noteData.priority!))
-                ],
-              ),
-              Text(noteData.description),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    '12/12/2021',
-                    style: Theme.of(context).textTheme.subtitle2,
-                  )
-                ],
-              )
-            ],
+        return InkWell(
+          onTap: () {
+            _navigateToDetail(
+              'Edit Note',
+              NoteCompanion(
+                  id: dr.Value(noteData.id),
+                  title: dr.Value(noteData.title),
+                  description: dr.Value(noteData.description),
+                  priority: dr.Value(noteData.priority),
+                  color: dr.Value(noteData.color)),
+            );
+          },
+          child: Container(
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                border: Border.all(color: Colors.black)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(noteData.title),
+                    Text(_getPriority(noteData.priority!))
+                  ],
+                ),
+                Text(noteData.description),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      '12/12/2021',
+                      style: Theme.of(context).textTheme.subtitle2,
+                    )
+                  ],
+                )
+              ],
+            ),
           ),
         );
       },

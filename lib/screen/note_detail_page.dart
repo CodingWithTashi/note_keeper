@@ -92,7 +92,9 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
           ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            _deleteNotes();
+          },
           icon: const Icon(
             Icons.delete,
             color: Colors.black,
@@ -113,5 +115,39 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
         .then((value) {
       Navigator.pop(context, true);
     });
+  }
+
+  void _deleteNotes() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Delete Note?'),
+          content: Text('Do you really want to delete this note'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                appDatabase
+                    .deleteNote(NoteData(
+                        id: widget.noteCompanion.id.value,
+                        title: widget.noteCompanion.title.value,
+                        description: widget.noteCompanion.description.value))
+                    .then((value) {
+                  Navigator.pop(context, true);
+                });
+              },
+              child: Text('Delete'),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
