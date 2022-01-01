@@ -1,8 +1,18 @@
-# note_keeper
+# NoteKeeper Application
 
-A new Flutter project.
+## Demo
+
+## Intro
+Basic Note Keeper Application using flutter moor/drift database.
+This Project is inspired from bimsina. https://github.com/bimsina/notes-app
 
 ## Getting Started
+Make sure to check out YouTube tutorial [here](https://www.youtube.com/watch?v=_xVWj0LXx24&list=PLVW1e1FvhW6521gIA3RRQbikyxeO9MP6G)   
+Each Video contain different branch
+
+## Source Code
+If You want the complete source code, Check out the lastest branch
+
 
 This project is a starting point for a Flutter application.
 
