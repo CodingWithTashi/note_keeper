@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:note_keeper/database/database.dart';
 import 'package:note_keeper/screen/note_detail_page.dart';
+import 'package:note_keeper/util/color_picker.dart';
 import 'package:provider/provider.dart';
 
 class NoteListPage extends StatefulWidget {
@@ -103,7 +104,8 @@ class _NoteListPageState extends State<NoteListPage> {
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                border: Border.all(color: Colors.black)),
+                border: Border.all(color: Colors.black),
+                color: colors[noteData.color!]),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
