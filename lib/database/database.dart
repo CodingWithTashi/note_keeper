@@ -32,4 +32,8 @@ class AppDatabase extends _$AppDatabase {
 
   @override
   int get schemaVersion => 1;
+  //GET ALL THE NOTES FROM DB
+  Future<List<NoteData>> getNoteList() async {
+    return await select(note).get();
+  }
 }
