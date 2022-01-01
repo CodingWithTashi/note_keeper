@@ -47,7 +47,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
                 priorityLevel = selectedIndex;
               },
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             TextFormField(
@@ -125,8 +125,8 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
               id: widget.noteCompanion.id.value,
               title: titleEditingController.text,
               description: descriptionEditingController.text,
-              color: 1,
-              priority: 1))
+              color: colorLevel,
+              priority: priorityLevel))
           .then((value) {
         Navigator.pop(context, true);
       });
@@ -135,8 +135,8 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
           .insertNote(NoteCompanion(
         title: dr.Value(titleEditingController.text),
         description: dr.Value(descriptionEditingController.text),
-        color: dr.Value(1),
-        priority: dr.Value(1),
+        color: dr.Value(colorLevel),
+        priority: dr.Value(priorityLevel),
       ))
           .then((value) {
         Navigator.pop(context, true);
