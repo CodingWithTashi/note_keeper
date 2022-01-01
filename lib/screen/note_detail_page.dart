@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart' as dr;
 import 'package:flutter/material.dart';
 import 'package:note_keeper/database/database.dart';
+import 'package:note_keeper/util/priority_picker.dart';
 import 'package:provider/provider.dart';
 
 class NoteDetailPage extends StatefulWidget {
@@ -18,12 +19,16 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
   late AppDatabase appDatabase;
   late TextEditingController titleEditingController;
   late TextEditingController descriptionEditingController;
+  int priorityLevel = 0;
+  int colorLevel = 0;
   @override
   void initState() {
     titleEditingController = TextEditingController();
     descriptionEditingController = TextEditingController();
     titleEditingController.text = widget.noteCompanion.title.value;
     descriptionEditingController.text = widget.noteCompanion.description.value;
+    priorityLevel = widget.noteCompanion.priority.value!;
+    colorLevel = widget.noteCompanion.color.value!;
     super.initState();
   }
 
@@ -33,9 +38,18 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
     return Scaffold(
       appBar: _getDetailAppBar(),
       body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
           children: [
+            PriorityPicker(
+              index: priorityLevel,
+              onTap: (selectedIndex) {
+                priorityLevel = selectedIndex;
+              },
+            ),
+            SizedBox(
+              height: 10,
+            ),
             TextFormField(
               controller: titleEditingController,
               decoration: InputDecoration(
