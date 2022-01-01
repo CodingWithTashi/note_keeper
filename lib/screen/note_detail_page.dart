@@ -1,3 +1,4 @@
+import 'package:drift/drift.dart' as dr;
 import 'package:flutter/material.dart';
 import 'package:note_keeper/database/database.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +32,35 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
     appDatabase = Provider.of<AppDatabase>(context);
     return Scaffold(
       appBar: _getDetailAppBar(),
-      body: Container(),
+      body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Column(
+          children: [
+            TextFormField(
+              controller: titleEditingController,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  hintText: 'Enter Title'),
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            TextFormField(
+              controller: descriptionEditingController,
+              maxLength: 255,
+              minLines: 7,
+              maxLines: 8,
+              decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  hintText: 'Enter Title'),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -54,7 +83,9 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
       ),
       actions: [
         IconButton(
-          onPressed: () {},
+          onPressed: () {
+            _saveToDb();
+          },
           icon: const Icon(
             Icons.save,
             color: Colors.black,
@@ -69,5 +100,18 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
         ),
       ],
     );
+  }
+
+  void _saveToDb() {
+    appDatabase
+        .insertNote(NoteCompanion(
+      title: dr.Value(titleEditingController.text),
+      description: dr.Value(descriptionEditingController.text),
+      color: dr.Value(1),
+      priority: dr.Value(1),
+    ))
+        .then((value) {
+      Navigator.pop(context, true);
+    });
   }
 }

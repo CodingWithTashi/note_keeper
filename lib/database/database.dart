@@ -36,4 +36,9 @@ class AppDatabase extends _$AppDatabase {
   Future<List<NoteData>> getNoteList() async {
     return await select(note).get();
   }
+
+  //INSERT NEW NOTE IN DB
+  Future<int> insertNote(NoteCompanion noteCompanion) async {
+    return await into(note).insert(noteCompanion);
+  }
 }
