@@ -13,6 +13,7 @@ class Note extends Table {
   TextColumn get description => text().named('description')();
   IntColumn get priority => integer().nullable()();
   IntColumn get color => integer().nullable()();
+  TextColumn get date => text()();
 }
 
 LazyDatabase _openConnection() {

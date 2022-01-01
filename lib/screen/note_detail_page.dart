@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart' as dr;
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:note_keeper/database/database.dart';
 import 'package:note_keeper/util/color_picker.dart';
 import 'package:note_keeper/util/priority_picker.dart';
@@ -138,18 +139,19 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
               title: titleEditingController.text,
               description: descriptionEditingController.text,
               color: colorLevel,
-              priority: priorityLevel))
+              priority: priorityLevel,
+              date: DateFormat.yMMMd().format(DateTime.now())))
           .then((value) {
         Navigator.pop(context, true);
       });
     } else {
       appDatabase
           .insertNote(NoteCompanion(
-        title: dr.Value(titleEditingController.text),
-        description: dr.Value(descriptionEditingController.text),
-        color: dr.Value(colorLevel),
-        priority: dr.Value(priorityLevel),
-      ))
+              title: dr.Value(titleEditingController.text),
+              description: dr.Value(descriptionEditingController.text),
+              color: dr.Value(colorLevel),
+              priority: dr.Value(priorityLevel),
+              date: dr.Value(DateFormat.yMMMd().format(DateTime.now()))))
           .then((value) {
         Navigator.pop(context, true);
       });
@@ -177,7 +179,8 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
                     .deleteNote(NoteData(
                         id: widget.noteCompanion.id.value,
                         title: widget.noteCompanion.title.value,
-                        description: widget.noteCompanion.description.value))
+                        description: widget.noteCompanion.description.value,
+                        date: DateFormat.yMMMd().format(DateTime.now())))
                     .then((value) {
                   Navigator.pop(context, true);
                 });
