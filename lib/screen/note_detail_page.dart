@@ -1,6 +1,7 @@
 import 'package:drift/drift.dart' as dr;
 import 'package:flutter/material.dart';
 import 'package:note_keeper/database/database.dart';
+import 'package:note_keeper/util/color_picker.dart';
 import 'package:note_keeper/util/priority_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -36,6 +37,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
   Widget build(BuildContext context) {
     appDatabase = Provider.of<AppDatabase>(context);
     return Scaffold(
+      backgroundColor: colors[colorLevel],
       appBar: _getDetailAppBar(),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -45,6 +47,16 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
               index: priorityLevel,
               onTap: (selectedIndex) {
                 priorityLevel = selectedIndex;
+              },
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            ColorPicker(
+              index: colorLevel,
+              onTap: (selectedColor) {
+                colorLevel = selectedColor;
+                setState(() {});
               },
             ),
             const SizedBox(
@@ -80,7 +92,7 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
 
   _getDetailAppBar() {
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: colors[colorLevel],
       elevation: 0,
       leading: IconButton(
         onPressed: () {
