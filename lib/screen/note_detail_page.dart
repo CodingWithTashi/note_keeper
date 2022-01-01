@@ -105,16 +105,29 @@ class _NoteDetailPageState extends State<NoteDetailPage> {
   }
 
   void _saveToDb() {
-    appDatabase
-        .insertNote(NoteCompanion(
-      title: dr.Value(titleEditingController.text),
-      description: dr.Value(descriptionEditingController.text),
-      color: dr.Value(1),
-      priority: dr.Value(1),
-    ))
-        .then((value) {
-      Navigator.pop(context, true);
-    });
+    if (widget.noteCompanion.id.present) {
+      appDatabase
+          .updateNote(NoteData(
+              id: widget.noteCompanion.id.value,
+              title: titleEditingController.text,
+              description: descriptionEditingController.text,
+              color: 1,
+              priority: 1))
+          .then((value) {
+        Navigator.pop(context, true);
+      });
+    } else {
+      appDatabase
+          .insertNote(NoteCompanion(
+        title: dr.Value(titleEditingController.text),
+        description: dr.Value(descriptionEditingController.text),
+        color: dr.Value(1),
+        priority: dr.Value(1),
+      ))
+          .then((value) {
+        Navigator.pop(context, true);
+      });
+    }
   }
 
   void _deleteNotes() {

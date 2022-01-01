@@ -108,11 +108,22 @@ class _NoteListPageState extends State<NoteListPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(noteData.title),
-                    Text(_getPriority(noteData.priority!))
+                    Expanded(
+                      child: Text(
+                        noteData.title,
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                    ),
+                    Text(
+                      _getPriority(noteData.priority!),
+                      style: TextStyle(color: _getColor(noteData.priority!)),
+                    )
                   ],
                 ),
-                Text(noteData.description),
+                Text(
+                  noteData.description,
+                  style: Theme.of(context).textTheme.bodyText2,
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -154,6 +165,17 @@ class _NoteListPageState extends State<NoteListPage> {
         return '!!';
       default:
         return '!';
+    }
+  }
+
+  _getColor(int priority) {
+    switch (priority) {
+      case 1:
+        return Colors.red;
+      case 2:
+        return Colors.orange;
+      default:
+        return Colors.yellow;
     }
   }
 }
