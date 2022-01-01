@@ -1,7 +1,5 @@
 # NoteKeeper Application
 
-## Demo
-
 ## Intro
 Basic Note Keeper Application using flutter moor/drift database.
 This Project is inspired from bimsina. https://github.com/bimsina/notes-app
@@ -13,6 +11,14 @@ Each Video contain different branch
 ## Source Code
 If You want the complete source code, Check out the lastest branch
 
+
+## Demo   
+| ![Image](https://github.com/CodingWithTashi/note_keeper/blob/Part_15/demo/main.png?raw=true) | ![Image](https://github.com/CodingWithTashi/note_keeper/blob/Part_15/demo/list.png?raw=true) |
+| :------------: | :------------: |
+| **Main Screen** | **List Screen** |    
+| ![Image](https://github.com/CodingWithTashi/note_keeper/blob/Part_15/demo/detail.png?raw=true) | ![Image](https://github.com/CodingWithTashi/note_keeper/blob/Part_15/demo/gif.gif?raw=true) |
+| :------------: | :------------: |
+| **Detail Screen** | **Gif Demo** |   
 
 This project is a starting point for a Flutter application.
 
