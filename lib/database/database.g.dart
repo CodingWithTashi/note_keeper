@@ -13,12 +13,14 @@ class NoteData extends DataClass implements Insertable<NoteData> {
   final String description;
   final int? priority;
   final int? color;
+  final String date;
   NoteData(
       {required this.id,
       required this.title,
       required this.description,
       this.priority,
-      this.color});
+      this.color,
+      required this.date});
   factory NoteData.fromData(Map<String, dynamic> data, {String? prefix}) {
     final effectivePrefix = prefix ?? '';
     return NoteData(
@@ -32,6 +34,8 @@ class NoteData extends DataClass implements Insertable<NoteData> {
           .mapFromDatabaseResponse(data['${effectivePrefix}priority']),
       color: const IntType()
           .mapFromDatabaseResponse(data['${effectivePrefix}color']),
+      date: const StringType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}date'])!,
     );
   }
   @override
@@ -46,6 +50,7 @@ class NoteData extends DataClass implements Insertable<NoteData> {
     if (!nullToAbsent || color != null) {
       map['color'] = Variable<int?>(color);
     }
+    map['date'] = Variable<String>(date);
     return map;
   }
 
@@ -59,6 +64,7 @@ class NoteData extends DataClass implements Insertable<NoteData> {
           : Value(priority),
       color:
           color == null && nullToAbsent ? const Value.absent() : Value(color),
+      date: Value(date),
     );
   }
 
@@ -71,6 +77,7 @@ class NoteData extends DataClass implements Insertable<NoteData> {
       description: serializer.fromJson<String>(json['description']),
       priority: serializer.fromJson<int?>(json['priority']),
       color: serializer.fromJson<int?>(json['color']),
+      date: serializer.fromJson<String>(json['date']),
     );
   }
   @override
@@ -82,6 +89,7 @@ class NoteData extends DataClass implements Insertable<NoteData> {
       'description': serializer.toJson<String>(description),
       'priority': serializer.toJson<int?>(priority),
       'color': serializer.toJson<int?>(color),
+      'date': serializer.toJson<String>(date),
     };
   }
 
@@ -90,13 +98,15 @@ class NoteData extends DataClass implements Insertable<NoteData> {
           String? title,
           String? description,
           int? priority,
-          int? color}) =>
+          int? color,
+          String? date}) =>
       NoteData(
         id: id ?? this.id,
         title: title ?? this.title,
         description: description ?? this.description,
         priority: priority ?? this.priority,
         color: color ?? this.color,
+        date: date ?? this.date,
       );
   @override
   String toString() {
@@ -105,13 +115,15 @@ class NoteData extends DataClass implements Insertable<NoteData> {
           ..write('title: $title, ')
           ..write('description: $description, ')
           ..write('priority: $priority, ')
-          ..write('color: $color')
+          ..write('color: $color, ')
+          ..write('date: $date')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, title, description, priority, color);
+  int get hashCode =>
+      Object.hash(id, title, description, priority, color, date);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -120,7 +132,8 @@ class NoteData extends DataClass implements Insertable<NoteData> {
           other.title == this.title &&
           other.description == this.description &&
           other.priority == this.priority &&
-          other.color == this.color);
+          other.color == this.color &&
+          other.date == this.date);
 }
 
 class NoteCompanion extends UpdateCompanion<NoteData> {
@@ -129,12 +142,14 @@ class NoteCompanion extends UpdateCompanion<NoteData> {
   final Value<String> description;
   final Value<int?> priority;
   final Value<int?> color;
+  final Value<String> date;
   const NoteCompanion({
     this.id = const Value.absent(),
     this.title = const Value.absent(),
     this.description = const Value.absent(),
     this.priority = const Value.absent(),
     this.color = const Value.absent(),
+    this.date = const Value.absent(),
   });
   NoteCompanion.insert({
     this.id = const Value.absent(),
@@ -142,14 +157,17 @@ class NoteCompanion extends UpdateCompanion<NoteData> {
     required String description,
     this.priority = const Value.absent(),
     this.color = const Value.absent(),
+    required String date,
   })  : title = Value(title),
-        description = Value(description);
+        description = Value(description),
+        date = Value(date);
   static Insertable<NoteData> custom({
     Expression<int>? id,
     Expression<String>? title,
     Expression<String>? description,
     Expression<int?>? priority,
     Expression<int?>? color,
+    Expression<String>? date,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
@@ -157,6 +175,7 @@ class NoteCompanion extends UpdateCompanion<NoteData> {
       if (description != null) 'description': description,
       if (priority != null) 'priority': priority,
       if (color != null) 'color': color,
+      if (date != null) 'date': date,
     });
   }
 
@@ -165,13 +184,15 @@ class NoteCompanion extends UpdateCompanion<NoteData> {
       Value<String>? title,
       Value<String>? description,
       Value<int?>? priority,
-      Value<int?>? color}) {
+      Value<int?>? color,
+      Value<String>? date}) {
     return NoteCompanion(
       id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
       priority: priority ?? this.priority,
       color: color ?? this.color,
+      date: date ?? this.date,
     );
   }
 
@@ -193,6 +214,9 @@ class NoteCompanion extends UpdateCompanion<NoteData> {
     if (color.present) {
       map['color'] = Variable<int?>(color.value);
     }
+    if (date.present) {
+      map['date'] = Variable<String>(date.value);
+    }
     return map;
   }
 
@@ -203,7 +227,8 @@ class NoteCompanion extends UpdateCompanion<NoteData> {
           ..write('title: $title, ')
           ..write('description: $description, ')
           ..write('priority: $priority, ')
-          ..write('color: $color')
+          ..write('color: $color, ')
+          ..write('date: $date')
           ..write(')'))
         .toString();
   }
@@ -241,9 +266,14 @@ class $NoteTable extends Note with TableInfo<$NoteTable, NoteData> {
   late final GeneratedColumn<int?> color = GeneratedColumn<int?>(
       'color', aliasedName, true,
       type: const IntType(), requiredDuringInsert: false);
+  final VerificationMeta _dateMeta = const VerificationMeta('date');
+  @override
+  late final GeneratedColumn<String?> date = GeneratedColumn<String?>(
+      'date', aliasedName, false,
+      type: const StringType(), requiredDuringInsert: true);
   @override
   List<GeneratedColumn> get $columns =>
-      [id, title, description, priority, color];
+      [id, title, description, priority, color, date];
   @override
   String get aliasedName => _alias ?? 'note';
   @override
@@ -277,6 +307,12 @@ class $NoteTable extends Note with TableInfo<$NoteTable, NoteData> {
     if (data.containsKey('color')) {
       context.handle(
           _colorMeta, color.isAcceptableOrUnknown(data['color']!, _colorMeta));
+    }
+    if (data.containsKey('date')) {
+      context.handle(
+          _dateMeta, date.isAcceptableOrUnknown(data['date']!, _dateMeta));
+    } else if (isInserting) {
+      context.missing(_dateMeta);
     }
     return context;
   }

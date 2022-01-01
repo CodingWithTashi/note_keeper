@@ -126,13 +126,13 @@ class _NoteListPageState extends State<NoteListPage> {
                 ),
                 Text(
                   noteData.description,
-                  style: Theme.of(context).textTheme.bodyText2,
+                  style: Theme.of(context).textTheme.bodyText1,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      '12/12/2021',
+                      noteData.date,
                       style: Theme.of(context).textTheme.subtitle2,
                     )
                   ],
